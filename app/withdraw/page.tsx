@@ -1,12 +1,9 @@
 import { Box, Button, Divider, Flex, HStack, Heading, Image, Input, InputGroup, InputLeftElement, Text, VStack } from "@chakra-ui/react";
-import { faEthereum } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Navigation from "./components/Navigation";
-import StakeForm from "./components/StakeForm";
-import StakeInfo from "./components/StakeInfo";
-import { useWeb3Modal } from "@web3modal/ethers5/react";
+import Navigation from "../components/Navigation";
+import StakeInfo from "../components/StakeInfo";
+import WithdrawForm from "../components/WithdrawForm";
 
-export default function Home() {
+export default function Page() {
   return (
     <>
       <Box
@@ -21,11 +18,11 @@ export default function Home() {
         <Flex justify={"center"} align={"center"} gap={5} flexDirection={"column"} mt={-30}>
           <Navigation />
           <Box mt={10}>
-            <Heading textAlign={"center"}>Stake DreyerX</Heading>
-            <Text opacity={.7}>Stake DreyerX and receive DreyerX while staking.</Text>
+            <Heading textAlign={"center"}>Withdraw DreyerX</Heading>
+            <Text opacity={.7} textAlign={"center"}>Withdraw staking rewards.</Text>
           </Box>
 
-          <StakeForm />
+          <WithdrawForm />
           <StakeInfo />
 
           <Box w={500}>
