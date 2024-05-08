@@ -10,13 +10,13 @@ import {
 	address as StakingContractAddress,
 	abi as StakingAbi
 } from '../../artifacts/staking.json';
+import moment from 'moment';
 
-export default function StakeInfo() {
+export default function WithdrawInfo() {
 	const [loading, setLoading] = useState(true);
-	const [apy, setApy] = useState('0');
 	const [totalStaked, setTotalStaked] = useState(0);
 	const [totalStakers, setTotalStakers] = useState('0');
-	const [exitPenaltyFee, setExitPenaltyFee] = useState('0');
+	const [holderUnlockTime, setHolderUnlockTime] = useState(0);
 	// const { address } = useWeb3ModalAccount()
 	const { walletProvider } = useWeb3ModalProvider();
 
@@ -30,15 +30,15 @@ export default function StakeInfo() {
 				StakingAbi,
 				signer
 			);
-			const stakingApy = await contract.apy();
+			const stakingHolderUnlockTime = await contract.holderUnlockTime(
+				await signer.getAddress()
+			);
 			const stakingTotalStaked = await contract.totalStaked();
 			const stakingTotalStakers = await contract.totalStakers();
-			const stakingPenaltyFee = await contract.exitPenaltyPerc();
 
-			setApy(stakingApy);
 			setTotalStaked(stakingTotalStaked);
 			setTotalStakers(stakingTotalStakers);
-			setExitPenaltyFee(stakingPenaltyFee);
+			setHolderUnlockTime(stakingHolderUnlockTime);
 			setLoading(false);
 		})();
 	}, []);
@@ -47,24 +47,24 @@ export default function StakeInfo() {
 		<Box bg={'card'} w={500} borderRadius={5} p={5}>
 			<Flex gap={3} flexDirection={'column'}>
 				<HStack justify={'space-between'}>
-					<Text>Annual Percentage Rate</Text>
-					<Text>{loading ? '-' : parseInt(apy) + '%'}</Text>
+					<Text>Unlock Time</Text>
+					<Text>
+						{loading == true
+							? '-'
+							: moment(new Date(holderUnlockTime * 1000)).format('LL')}
+					</Text>
 				</HStack>
 				<HStack justify={'space-between'}>
 					<Text>Total Staked</Text>
 					<Text>
 						{loading
 							? '-'
-							: ethers.utils.formatUnits(totalStaked, 'ether') + ' DRX'}
+							: ethers.utils.formatUnits(totalStaked, 'ether') + 'DRX'}
 					</Text>
 				</HStack>
 				<HStack justify={'space-between'}>
 					<Text>Total Stakers</Text>
 					<Text>{loading ? '-' : parseInt(totalStakers) + ' Stakers'}</Text>
-				</HStack>
-				<HStack justify={'space-between'}>
-					<Text>Penalty Fee</Text>
-					<Text>{loading ? '-' : parseInt(exitPenaltyFee) + '%'}</Text>
 				</HStack>
 			</Flex>
 		</Box>
