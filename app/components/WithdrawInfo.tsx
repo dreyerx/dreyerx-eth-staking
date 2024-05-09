@@ -7,9 +7,9 @@ import {
 } from '@web3modal/ethers5/react';
 import { BigNumber, ethers } from 'ethers';
 import {
-	address as StakingContractAddress,
-	abi as StakingAbi
-} from '../../artifacts/staking.json';
+	StakingContractAbi,
+	StakingContractAddress
+} from '@/artifacts/staking';
 import moment from 'moment';
 
 interface IWithdrawInfo {
@@ -27,12 +27,14 @@ export default function WithdrawInfo(props: IWithdrawInfo) {
 	useEffect(() => {
 		(async () => {
 			if (!isConnected) return false;
-			const etherProvider = new ethers.providers.Web3Provider(walletProvider);
+			const etherProvider = new ethers.providers.Web3Provider(
+				walletProvider as any
+			);
 			const signer = etherProvider.getSigner();
 
 			const contract = new ethers.Contract(
 				StakingContractAddress,
-				StakingAbi,
+				StakingContractAbi,
 				signer
 			);
 			const stakingHolderUnlockTime = await contract.holderUnlockTime(
@@ -48,7 +50,7 @@ export default function WithdrawInfo(props: IWithdrawInfo) {
 
 			setLoading(false);
 		})();
-	}, []);
+	}, [isConnected, props, walletProvider]);
 
 	return (
 		<Box bg={'card'} w={500} borderRadius={5} p={5}>

@@ -1,11 +1,18 @@
 import { ethers } from 'ethers';
-import { address, abi } from '../../artifacts/staking.json';
+import {
+	StakingContractAbi,
+	StakingContractAddress
+} from '@/artifacts/staking';
 
 const Withdraw = async () => {
-	const provider = new ethers.providers.Web3Provider(window.ethereum);
+	const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 	const signer = provider.getSigner();
 
-	const contract = new ethers.Contract(address, abi, signer);
+	const contract = new ethers.Contract(
+		StakingContractAddress,
+		StakingContractAbi,
+		signer
+	);
 	const withdraw = await contract.withdraw({ gasLimit: 200000 });
 	await withdraw.wait();
 	return withdraw;

@@ -1,33 +1,10 @@
 'use client';
-import {
-	Box,
-	Button,
-	Divider,
-	Flex,
-	HStack,
-	Heading,
-	Image,
-	Input,
-	InputGroup,
-	InputLeftElement,
-	Text,
-	VStack,
-	keyframes
-} from '@chakra-ui/react';
-import { faEthereum } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Box, Flex, HStack, Heading, Text } from '@chakra-ui/react';
 import Navigation from './components/Navigation';
 import StakeForm from './components/StakeForm';
 import StakeInfo from './components/StakeInfo';
-import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
-import { motion } from 'framer-motion';
-import { Suspense } from 'react';
-import Loading from './Loading';
 
 export default function Home() {
-	const { isConnected } = useWeb3ModalAccount();
-	// const isConnected = false
-
 	return (
 		<>
 			<Flex

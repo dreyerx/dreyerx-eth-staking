@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Roboto } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import Theme from './theme';
 import { Web3Modal } from './components/Web3Modal';
 

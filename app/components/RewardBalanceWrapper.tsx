@@ -1,14 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
 import {
-	address as StakingContractAddress,
-	abi
-} from '../../artifacts/staking.json';
-import { BigNumberish, ethers, Contract } from 'ethers';
+	StakingContractAbi,
+	StakingContractAddress
+} from '@/artifacts/staking';
+import { ethers } from 'ethers';
 import {
 	useWeb3ModalAccount,
 	useWeb3ModalProvider
 } from '@web3modal/ethers5/react';
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface IRewardBalanceWrapper {
 	setPendingReward: (pendingReward: string) => void;
@@ -24,10 +24,16 @@ export default function RewardBalanceWrapper(props: IRewardBalanceWrapper) {
 	useEffect(() => {
 		(async () => {
 			if (!isConnected) return false;
-			const etherProvider = new ethers.providers.Web3Provider(window.ethereum);
+			const etherProvider = new ethers.providers.Web3Provider(
+				walletProvider as any
+			);
 			const signer = etherProvider.getSigner();
 
-			const contract = new ethers.Contract(StakingContractAddress, abi, signer);
+			const contract = new ethers.Contract(
+				StakingContractAddress,
+				StakingContractAbi,
+				signer
+			);
 			const pendingReward = await contract.pendingReward(
 				await signer.getAddress()
 			);
@@ -39,7 +45,7 @@ export default function RewardBalanceWrapper(props: IRewardBalanceWrapper) {
 			);
 			props.setPendingReward(pendingReward);
 		})();
-	}, []);
+	}, [isConnected, props, walletProvider]);
 
 	return (
 		<Flex justify={'space-between'}>
@@ -49,17 +55,6 @@ export default function RewardBalanceWrapper(props: IRewardBalanceWrapper) {
 			<Text opacity={0.5} fontSize={12} fontWeight={400}>
 				Rewards: {rewardsDebt} DRX
 			</Text>
-			{/* {
-                allowance.length > 10 ? (
-                    <Text opacity={.5} fontSize={12} fontWeight={400}>
-                        Allowance: {allowance.substring(0, 5)}...{allowance.substring(allowance.length - 5, allowance.length)}
-                    </Text>
-                ) : (
-                    <Text opacity={.5} fontSize={12} fontWeight={400}>
-                        Allowance: {allowance}
-                    </Text>
-                )
-            } */}
 		</Flex>
 	);
 }

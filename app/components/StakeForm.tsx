@@ -1,12 +1,10 @@
 'use client';
-import { Box, Button, Input, Link, Text, VStack } from '@chakra-ui/react';
-import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
-import React, { Component, useState } from 'react';
+import { Box, Link, Text, VStack } from '@chakra-ui/react';
+import React, { Component } from 'react';
 import StakeInputWrapper from './StakeInputWrapper';
 import StakeButtonWrapper from './StakeButtonWrapper';
 import TokenBalanceWrapper from './TokenBalanceWrapper';
 import { BigNumberish, ContractTransaction, ethers } from 'ethers';
-import { Transaction } from 'ethers';
 import Deposit from '../logic/Deposit';
 
 interface IStakeFormState {

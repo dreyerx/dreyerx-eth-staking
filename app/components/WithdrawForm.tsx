@@ -1,11 +1,7 @@
 'use client';
-import { Box, Button, Input, Link, Text, VStack } from '@chakra-ui/react';
-import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
-import React, { Component, useState } from 'react';
-import TokenBalanceWrapper from './TokenBalanceWrapper';
+import { Box, Link, Text, VStack } from '@chakra-ui/react';
+import React, { Component } from 'react';
 import { BigNumber, BigNumberish, ContractTransaction, ethers } from 'ethers';
-import { Transaction } from 'ethers';
-import Deposit from '../logic/Deposit';
 import WithdrawButtonWrapper from './WithdrawButtonWrapper';
 import RewardBalanceWrapper from './RewardBalanceWrapper';
 import HarvestButtonWrapper from './HarvestButtonWrapper';

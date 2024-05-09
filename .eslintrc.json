@@ -9,6 +9,9 @@
 	"rules": {
 		"react/no-unescaped-entities": "off",
 		"@next/next/no-page-custom-font": "off",
-		"require-jsdoc": 0
+		"require-jsdoc": 0,
+		"semi": "error",
+		"new-cap": "off",
+		"react/react-in-jsx-scope": "off"
 	}
 }

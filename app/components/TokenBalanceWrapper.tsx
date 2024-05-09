@@ -1,15 +1,12 @@
 import { Flex, Text } from '@chakra-ui/react';
-import {
-	abi as TokenAbi,
-	address as TokenContractAddress
-} from '../../artifacts/token.json';
-import { address as StakingContractAddress } from '../../artifacts/staking.json';
-import { BigNumberish, ethers, Contract } from 'ethers';
+import { TokenContractAbi, TokenContractAddress } from '@/artifacts/token';
+import { StakingContractAddress } from '@/artifacts/staking';
+import { ethers } from 'ethers';
 import {
 	useWeb3ModalAccount,
 	useWeb3ModalProvider
 } from '@web3modal/ethers5/react';
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface ITokenBalanceProps {
 	setAllowance: (allowance: string) => void;
@@ -19,23 +16,25 @@ export default function TokenBalanceWrapper(props: ITokenBalanceProps) {
 	const [balance, setBalance] = useState(0);
 	const [allowance, setAllowance] = useState('0');
 
-	const { address, isConnected } = useWeb3ModalAccount();
+	const { isConnected } = useWeb3ModalAccount();
 	const { walletProvider } = useWeb3ModalProvider();
 
 	useEffect(() => {
 		(async () => {
 			if (!isConnected) return false;
-			const etherProvider = new ethers.providers.Web3Provider(window.ethereum);
+			const etherProvider = new ethers.providers.Web3Provider(
+				walletProvider as any
+			);
 			const signer = etherProvider.getSigner();
 
 			const contract = new ethers.Contract(
 				TokenContractAddress,
-				TokenAbi,
+				TokenContractAbi,
 				signer
 			);
-			const tokenBalance = await contract.balanceOf(address);
+			const tokenBalance = await contract.balanceOf(await signer.getAddress());
 			const tokenAllowance = await contract.allowance(
-				address,
+				await signer.getAddress(),
 				StakingContractAddress
 			);
 
@@ -44,7 +43,7 @@ export default function TokenBalanceWrapper(props: ITokenBalanceProps) {
 
 			props.setAllowance(tokenAllowance);
 		})();
-	}, []);
+	}, [isConnected, props, walletProvider]);
 
 	return (
 		<Flex justify={'space-between'}>

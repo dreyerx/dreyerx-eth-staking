@@ -7,13 +7,13 @@ import { ReactNode } from 'react';
 const projectId = 'f26e3552aad7cf14a9529818133c81cd';
 
 // 2. Set chains
-const mainnet = {
-	chainId: 1,
-	name: 'Ethereum',
-	currency: 'ETH',
-	explorerUrl: 'https://etherscan.io',
-	rpcUrl: 'https://cloudflare-eth.com'
-};
+// const mainnet = {
+// 	chainId: 1,
+// 	name: 'Ethereum',
+// 	currency: 'ETH',
+// 	explorerUrl: 'https://etherscan.io',
+// 	rpcUrl: 'https://cloudflare-eth.com'
+// };
 
 const devnet = {
 	chainId: 31337,

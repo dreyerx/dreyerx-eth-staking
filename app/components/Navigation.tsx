@@ -2,7 +2,7 @@
 import { Box, Flex, HStack, Link, Text } from '@chakra-ui/react';
 import { faBoltLightning, faBoxes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
 export default function Navigation() {

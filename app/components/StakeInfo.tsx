@@ -7,9 +7,9 @@ import {
 } from '@web3modal/ethers5/react';
 import { ethers } from 'ethers';
 import {
-	address as StakingContractAddress,
-	abi as StakingAbi
-} from '../../artifacts/staking.json';
+	StakingContractAbi,
+	StakingContractAddress
+} from '@/artifacts/staking';
 
 export default function StakeInfo() {
 	const [loading, setLoading] = useState(true);
@@ -23,12 +23,14 @@ export default function StakeInfo() {
 	useEffect(() => {
 		(async () => {
 			if (!isConnected) return false;
-			const etherProvider = new ethers.providers.Web3Provider(walletProvider);
+			const etherProvider = new ethers.providers.Web3Provider(
+				walletProvider as any
+			);
 			const signer = etherProvider.getSigner();
 
 			const contract = new ethers.Contract(
 				StakingContractAddress,
-				StakingAbi,
+				StakingContractAbi,
 				signer
 			);
 			const stakingApy = await contract.apy();
