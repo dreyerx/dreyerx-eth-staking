@@ -19,11 +19,12 @@ export default function TokenBalanceWrapper(props: ITokenBalanceProps) {
 	const [balance, setBalance] = useState(0);
 	const [allowance, setAllowance] = useState('0');
 
-	const { address } = useWeb3ModalAccount();
+	const { address, isConnected } = useWeb3ModalAccount();
 	const { walletProvider } = useWeb3ModalProvider();
 
 	useEffect(() => {
 		(async () => {
+			if (!isConnected) return false
 			const etherProvider = new ethers.providers.Web3Provider(window.ethereum);
 			const signer = etherProvider.getSigner();
 

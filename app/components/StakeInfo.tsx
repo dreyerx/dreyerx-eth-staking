@@ -17,11 +17,12 @@ export default function StakeInfo() {
 	const [totalStaked, setTotalStaked] = useState(0);
 	const [totalStakers, setTotalStakers] = useState('0');
 	const [exitPenaltyFee, setExitPenaltyFee] = useState('0');
-	// const { address } = useWeb3ModalAccount()
+	const { isConnected } = useWeb3ModalAccount()
 	const { walletProvider } = useWeb3ModalProvider();
 
 	useEffect(() => {
 		(async () => {
+			if (!isConnected) return false
 			const etherProvider = new ethers.providers.Web3Provider(walletProvider);
 			const signer = etherProvider.getSigner();
 

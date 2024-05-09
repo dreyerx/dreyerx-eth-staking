@@ -1,3 +1,4 @@
+'use client'
 import {
 	Box,
 	Button,
@@ -15,8 +16,12 @@ import {
 import Navigation from '../components/Navigation';
 import WithdrawForm from '../components/WithdrawForm';
 import WithdrawInfo from '../components/WithdrawInfo';
+import { useState } from 'react';
+import { BigNumber } from 'ethers';
 
 export default function Page() {
+	const [ holderUnlockTime, setHolderUnlockTime ] = useState<BigNumber>(0)
+
 	return (
 		<>
 			<Box
@@ -43,8 +48,8 @@ export default function Page() {
 						</Text>
 					</Box>
 
-					<WithdrawForm />
-					<WithdrawInfo />
+					<WithdrawForm holderUnlockTime={holderUnlockTime} />
+					<WithdrawInfo setHolderUnlockTime={(unlockTime) => setHolderUnlockTime(unlockTime)} />
 
 					<Box w={500}>
 						<HStack justify={'space-between'}>

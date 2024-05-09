@@ -7,7 +7,7 @@ import React from 'react';
 
 export default function Navigation() {
 	const pathname = usePathname();
-	console.log(pathname);
+	
 	return (
 		<Flex
 			mt={10}

@@ -5,23 +5,28 @@ import {
 	useWeb3ModalAccount,
 	useWeb3ModalProvider
 } from '@web3modal/ethers5/react';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 import {
 	address as StakingContractAddress,
 	abi as StakingAbi
 } from '../../artifacts/staking.json';
 import moment from 'moment';
 
-export default function WithdrawInfo() {
+interface IWithdrawInfo {
+	setHolderUnlockTime: (holderUnlockTime: BigNumber) => void
+}
+
+export default function WithdrawInfo(props: IWithdrawInfo) {
 	const [loading, setLoading] = useState(true);
 	const [totalStaked, setTotalStaked] = useState(0);
 	const [totalStakers, setTotalStakers] = useState('0');
 	const [holderUnlockTime, setHolderUnlockTime] = useState(0);
-	// const { address } = useWeb3ModalAccount()
+	const { isConnected } = useWeb3ModalAccount()
 	const { walletProvider } = useWeb3ModalProvider();
 
 	useEffect(() => {
 		(async () => {
+			if (!isConnected) return false
 			const etherProvider = new ethers.providers.Web3Provider(walletProvider);
 			const signer = etherProvider.getSigner();
 
@@ -39,7 +44,10 @@ export default function WithdrawInfo() {
 			setTotalStaked(stakingTotalStaked);
 			setTotalStakers(stakingTotalStakers);
 			setHolderUnlockTime(stakingHolderUnlockTime);
+			props.setHolderUnlockTime(stakingHolderUnlockTime)
+
 			setLoading(false);
+
 		})();
 	}, []);
 
