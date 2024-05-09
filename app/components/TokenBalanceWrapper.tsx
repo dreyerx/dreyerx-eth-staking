@@ -24,7 +24,7 @@ export default function TokenBalanceWrapper(props: ITokenBalanceProps) {
 
 	useEffect(() => {
 		(async () => {
-			if (!isConnected) return false
+			if (!isConnected) return false;
 			const etherProvider = new ethers.providers.Web3Provider(window.ethereum);
 			const signer = etherProvider.getSigner();
 

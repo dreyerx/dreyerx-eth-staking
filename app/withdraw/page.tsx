@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import {
 	Box,
 	Button,
@@ -20,7 +20,7 @@ import { useState } from 'react';
 import { BigNumber } from 'ethers';
 
 export default function Page() {
-	const [ holderUnlockTime, setHolderUnlockTime ] = useState<BigNumber>(0)
+	const [holderUnlockTime, setHolderUnlockTime] = useState<BigNumber>(0);
 
 	return (
 		<>
@@ -49,7 +49,11 @@ export default function Page() {
 					</Box>
 
 					<WithdrawForm holderUnlockTime={holderUnlockTime} />
-					<WithdrawInfo setHolderUnlockTime={(unlockTime) => setHolderUnlockTime(unlockTime)} />
+					<WithdrawInfo
+						setHolderUnlockTime={(unlockTime) =>
+							setHolderUnlockTime(unlockTime)
+						}
+					/>
 
 					<Box w={500}>
 						<HStack justify={'space-between'}>

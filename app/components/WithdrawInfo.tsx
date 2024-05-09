@@ -13,7 +13,7 @@ import {
 import moment from 'moment';
 
 interface IWithdrawInfo {
-	setHolderUnlockTime: (holderUnlockTime: BigNumber) => void
+	setHolderUnlockTime: (holderUnlockTime: BigNumber) => void;
 }
 
 export default function WithdrawInfo(props: IWithdrawInfo) {
@@ -21,12 +21,12 @@ export default function WithdrawInfo(props: IWithdrawInfo) {
 	const [totalStaked, setTotalStaked] = useState(0);
 	const [totalStakers, setTotalStakers] = useState('0');
 	const [holderUnlockTime, setHolderUnlockTime] = useState(0);
-	const { isConnected } = useWeb3ModalAccount()
+	const { isConnected } = useWeb3ModalAccount();
 	const { walletProvider } = useWeb3ModalProvider();
 
 	useEffect(() => {
 		(async () => {
-			if (!isConnected) return false
+			if (!isConnected) return false;
 			const etherProvider = new ethers.providers.Web3Provider(walletProvider);
 			const signer = etherProvider.getSigner();
 
@@ -44,10 +44,9 @@ export default function WithdrawInfo(props: IWithdrawInfo) {
 			setTotalStaked(stakingTotalStaked);
 			setTotalStakers(stakingTotalStakers);
 			setHolderUnlockTime(stakingHolderUnlockTime);
-			props.setHolderUnlockTime(stakingHolderUnlockTime)
+			props.setHolderUnlockTime(stakingHolderUnlockTime);
 
 			setLoading(false);
-
 		})();
 	}, []);
 

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import {
 	Box,
 	Button,
@@ -25,7 +25,7 @@ import { Suspense } from 'react';
 import Loading from './Loading';
 
 export default function Home() {
-	const { isConnected } = useWeb3ModalAccount()
+	const { isConnected } = useWeb3ModalAccount();
 	// const isConnected = false
 
 	return (

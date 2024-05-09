@@ -7,8 +7,8 @@ const Harvest = async () => {
 
 	const contract = new ethers.Contract(address, abi, signer);
 	const deposit = await contract.deposit('0', { gasLimit: 200000 });
-    await deposit.wait()
-	console.log(deposit)
+	await deposit.wait();
+	console.log(deposit);
 	return deposit;
 };
 

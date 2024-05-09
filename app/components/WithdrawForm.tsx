@@ -25,10 +25,13 @@ interface IWithdrawForm {
 }
 
 interface IWithdrawProps {
-	holderUnlockTime: BigNumber
+	holderUnlockTime: BigNumber;
 }
 
-export default class WithdrawForm extends Component<IWithdrawProps, IWithdrawForm> {
+export default class WithdrawForm extends Component<
+	IWithdrawProps,
+	IWithdrawForm
+> {
 	constructor(props: any) {
 		super(props);
 
@@ -50,8 +53,8 @@ export default class WithdrawForm extends Component<IWithdrawProps, IWithdrawFor
 	withdraw() {
 		(async () => {
 			try {
-				const withdrawOutput: ContractTransaction = await Withdraw()
-				console.log(withdrawOutput)
+				const withdrawOutput: ContractTransaction = await Withdraw();
+				console.log(withdrawOutput);
 				this.setState({
 					tx: withdrawOutput.hash
 				});
@@ -135,16 +138,14 @@ export default class WithdrawForm extends Component<IWithdrawProps, IWithdrawFor
 	renderButton() {
 		if (
 			Date.parse(
-				new Date(parseInt(this.props.holderUnlockTime.toString()) * 1000).toString()
+				new Date(
+					parseInt(this.props.holderUnlockTime.toString()) * 1000
+				).toString()
 			) > Date.parse(new Date().toString())
 		) {
-			return (
-				<WithdrawButtonWrapper withdrawFunction={this.withdraw} />
-			)
+			return <WithdrawButtonWrapper withdrawFunction={this.withdraw} />;
 		} else {
-			return (
-				<EmergencyWithdrawWrapper withdrawFunction={this.withdraw} />
-			)
+			return <EmergencyWithdrawWrapper withdrawFunction={this.withdraw} />;
 		}
 	}
 
@@ -165,7 +166,7 @@ export default class WithdrawForm extends Component<IWithdrawProps, IWithdrawFor
 						harvestFunction={this.harvest}
 						loading={this.state.harvestLoading}
 					/>
-					{ this.renderButton() }
+					{this.renderButton()}
 				</VStack>
 			</Box>
 		);

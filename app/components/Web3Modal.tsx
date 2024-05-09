@@ -32,10 +32,10 @@ const metadata = {
 
 // 4. Create Ethers config
 const ethersConfig = defaultConfig({
-	/*Required*/
+	/* Required*/
 	metadata,
 
-	/*Optional*/
+	/* Optional*/
 	enableEIP6963: true, // true by default
 	enableInjected: true, // true by default
 	enableCoinbase: true, // true by default
