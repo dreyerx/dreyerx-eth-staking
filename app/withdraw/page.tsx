@@ -1,26 +1,13 @@
 'use client';
-import {
-	Box,
-	Button,
-	Divider,
-	Flex,
-	HStack,
-	Heading,
-	Image,
-	Input,
-	InputGroup,
-	InputLeftElement,
-	Text,
-	VStack
-} from '@chakra-ui/react';
+import { Box, Flex, HStack, Heading, Text } from '@chakra-ui/react';
 import Navigation from '../components/Navigation';
 import WithdrawForm from '../components/WithdrawForm';
 import WithdrawInfo from '../components/WithdrawInfo';
 import { useState } from 'react';
-import { BigNumber } from 'ethers';
+import { BigNumberish } from 'ethers';
 
 export default function Page() {
-	const [holderUnlockTime, setHolderUnlockTime] = useState<BigNumber>(0);
+	const [holderUnlockTime, setHolderUnlockTime] = useState<BigNumberish>('0');
 
 	return (
 		<>

@@ -3,12 +3,8 @@ import {
 	StakingContractAbi,
 	StakingContractAddress
 } from '@/artifacts/staking';
-import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
-
 const Harvest = async () => {
-	const { walletProvider } = useWeb3ModalProvider();
-
-	const provider = new ethers.providers.Web3Provider(walletProvider as any);
+	const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 	const signer = provider.getSigner();
 
 	const contract = new ethers.Contract(

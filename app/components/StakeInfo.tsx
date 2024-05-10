@@ -44,7 +44,7 @@ export default function StakeInfo() {
 			setExitPenaltyFee(stakingPenaltyFee);
 			setLoading(false);
 		})();
-	}, []);
+	}, [isConnected, walletProvider]);
 
 	return (
 		<Box bg={'card'} w={500} borderRadius={5} p={5}>

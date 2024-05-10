@@ -1,7 +1,7 @@
 'use client';
 import { Box, Link, Text, VStack } from '@chakra-ui/react';
 import React, { Component } from 'react';
-import { BigNumber, BigNumberish, ContractTransaction, ethers } from 'ethers';
+import { BigNumberish, ContractTransaction, ethers } from 'ethers';
 import WithdrawButtonWrapper from './WithdrawButtonWrapper';
 import RewardBalanceWrapper from './RewardBalanceWrapper';
 import HarvestButtonWrapper from './HarvestButtonWrapper';
@@ -21,7 +21,7 @@ interface IWithdrawForm {
 }
 
 interface IWithdrawProps {
-	holderUnlockTime: BigNumber;
+	holderUnlockTime: BigNumberish;
 }
 
 export default class WithdrawForm extends Component<
@@ -71,7 +71,8 @@ export default class WithdrawForm extends Component<
 					txHarvest: harvestOutput.hash
 				});
 			} catch (error: any) {
-				this.setState({ errorMessage: error.message });
+				console.log(error);
+				this.setState({ errorMessage: error.reason });
 			}
 		})();
 	}

@@ -4,12 +4,9 @@ import {
 	StakingContractAddress
 } from '@/artifacts/staking';
 import { TokenContractAbi, TokenContractAddress } from '@/artifacts/token';
-import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
 
 const Deposit = async (amount: BigNumber) => {
-	const { walletProvider } = useWeb3ModalProvider();
-
-	const provider = new ethers.providers.Web3Provider(walletProvider as any);
+	const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 	const signer = provider.getSigner();
 
 	const contract = new ethers.Contract(
@@ -28,11 +25,8 @@ const Deposit = async (amount: BigNumber) => {
 	);
 
 	if (allowance < amount) {
-		const approve = await tokenContract.approve(
-			await signer.getAddress(),
-			amount
-		);
-		console.log(approve);
+		const approve = await tokenContract.approve(StakingContractAddress, amount);
+		await approve.wait();
 	}
 	const deposit = await contract.deposit(amount, { gasLimit: 200000 });
 	await deposit.wait();
