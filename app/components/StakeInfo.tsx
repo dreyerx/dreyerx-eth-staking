@@ -17,6 +17,7 @@ export default function StakeInfo() {
 	const [totalStaked, setTotalStaked] = useState(0);
 	const [totalStakers, setTotalStakers] = useState('0');
 	const [exitPenaltyFee, setExitPenaltyFee] = useState('0');
+	const [lockDuration, setLockDuration] = useState('0');
 	const { isConnected } = useWeb3ModalAccount();
 	const { walletProvider } = useWeb3ModalProvider();
 
@@ -37,14 +38,37 @@ export default function StakeInfo() {
 			const stakingTotalStaked = await contract.totalStaked();
 			const stakingTotalStakers = await contract.totalStakers();
 			const stakingPenaltyFee = await contract.exitPenaltyPerc();
+			const stakingLockDuration = await contract.lockDuration();
 
 			setApy(stakingApy);
 			setTotalStaked(stakingTotalStaked);
 			setTotalStakers(stakingTotalStakers);
 			setExitPenaltyFee(stakingPenaltyFee);
+			setLockDuration(stakingLockDuration);
 			setLoading(false);
 		})();
 	}, [isConnected, walletProvider]);
+
+	const renderLockDuration = () => {
+		const d = Math.floor(parseInt(lockDuration) / (3600 * 24));
+		const h = Math.floor((parseInt(lockDuration) % (3600 * 24)) / 3600);
+		const m = Math.floor((parseInt(lockDuration) % 3600) / 60);
+		const s = Math.floor(parseInt(lockDuration) % 60);
+
+		if (d == 0) {
+			if (h == 0) {
+				if (m == 0) {
+					return `${s} seconds`;
+				} else {
+					return `${m} minutes`;
+				}
+			} else {
+				return `${h} hours`;
+			}
+		} else {
+			return `${d} days`;
+		}
+	};
 
 	return (
 		<Box bg={'card'} w={500} borderRadius={5} p={5}>
@@ -64,6 +88,10 @@ export default function StakeInfo() {
 				<HStack justify={'space-between'}>
 					<Text>Total Stakers</Text>
 					<Text>{loading ? '-' : parseInt(totalStakers) + ' Stakers'}</Text>
+				</HStack>
+				<HStack justify={'space-between'}>
+					<Text>Lock Duration</Text>
+					<Text>{loading ? '-' : renderLockDuration() + ''}</Text>
 				</HStack>
 				<HStack justify={'space-between'}>
 					<Text>Penalty Fee</Text>
