@@ -4,7 +4,7 @@ services:
   frontend:
     container_name: dreyerx-eth-staking-frontend
     image: dreyerx-eth-staking-frontend
-    build: 
+    build:
       context: .
     ports:
       - 3001:3001
