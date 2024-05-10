@@ -11,6 +11,7 @@ export default function StakeButtonWrapper(props: IStakeButtonProps) {
 		<Button
 			w={'full'}
 			bgColor={'primary'}
+			color={'white'}
 			onClick={() => props.depositFunction()}
 			_hover={{
 				bgColor: 'hover.primary'

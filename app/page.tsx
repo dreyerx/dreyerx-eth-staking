@@ -15,12 +15,12 @@ export default function Home() {
 				mt={-30}
 			>
 				<Navigation />
-				<Box mt={10}>
+				<Flex mt={10} justifyContent={'center'} flexDirection={'column'}>
 					<Heading textAlign={'center'}>Stake DreyerX</Heading>
 					<Text opacity={0.7}>
 						Stake DreyerX and receive DreyerX while staking.
 					</Text>
-				</Box>
+				</Flex>
 
 				<StakeForm />
 				<StakeInfo />

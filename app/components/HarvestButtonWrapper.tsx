@@ -13,6 +13,7 @@ export default function HarvestButtonWrapper(props: IHarvestButtonWrapper) {
 		<Button
 			w={'full'}
 			bgColor={'primary'}
+			color={'white'}
 			onClick={() => props.harvestFunction()}
 			_hover={{
 				bgColor: 'hover.primary'
