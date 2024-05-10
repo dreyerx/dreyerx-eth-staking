@@ -1,0 +1,10 @@
+version: '1.8'
+
+services:
+  frontend:
+    container_name: dreyerx-eth-staking-frontend
+    image: dreyerx-eth-staking-frontend
+    build: 
+      context: .
+    ports:
+      - 3001:3001
