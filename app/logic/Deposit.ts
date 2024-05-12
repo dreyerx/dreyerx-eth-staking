@@ -3,7 +3,6 @@ import {
 	StakingContractAbi,
 	StakingContractAddress
 } from '@/artifacts/staking';
-import { TokenContractAbi, TokenContractAddress } from '@/artifacts/token';
 
 const Deposit = async (amount: BigNumber) => {
 	const provider = new ethers.providers.Web3Provider(window.ethereum as any);
@@ -14,20 +13,6 @@ const Deposit = async (amount: BigNumber) => {
 		StakingContractAbi,
 		signer
 	);
-	const tokenContract = new ethers.Contract(
-		TokenContractAddress,
-		TokenContractAbi,
-		signer
-	);
-	const allowance = await tokenContract.allowance(
-		await signer.getAddress(),
-		StakingContractAddress
-	);
-
-	if (allowance < amount) {
-		const approve = await tokenContract.approve(StakingContractAddress, amount);
-		await approve.wait();
-	}
 	const deposit = await contract.deposit(amount, { gasLimit: 200000 });
 	await deposit.wait();
 	return deposit;
