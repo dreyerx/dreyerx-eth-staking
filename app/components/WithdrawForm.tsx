@@ -1,7 +1,7 @@
 'use client';
-import { Box, Link, Text, VStack } from '@chakra-ui/react';
+import { Box, Text, VStack } from '@chakra-ui/react';
 import React, { Component } from 'react';
-import { BigNumberish, ContractTransaction, ethers } from 'ethers';
+import { BigNumberish, ethers } from 'ethers';
 import WithdrawButtonWrapper from './WithdrawButtonWrapper';
 import RewardBalanceWrapper from './RewardBalanceWrapper';
 import HarvestButtonWrapper from './HarvestButtonWrapper';
@@ -13,11 +13,12 @@ interface IWithdrawForm {
 	loading: boolean;
 	stakeAmount: string;
 	pendingReward: BigNumberish;
-	errorMessage: string;
-	tx: string;
-	txHarvest: string;
 	withdrawLoading: boolean;
 	harvestLoading: boolean;
+	message: {
+		type: string;
+		text: string;
+	};
 }
 
 interface IWithdrawProps {
@@ -35,11 +36,12 @@ export default class WithdrawForm extends Component<
 			loading: false,
 			stakeAmount: '',
 			pendingReward: 0,
-			errorMessage: '',
-			tx: '',
-			txHarvest: '',
 			withdrawLoading: false,
-			harvestLoading: false
+			harvestLoading: false,
+			message: {
+				type: '',
+				text: ''
+			}
 		};
 
 		this.withdraw = this.withdraw.bind(this);
@@ -49,15 +51,21 @@ export default class WithdrawForm extends Component<
 	withdraw() {
 		(async () => {
 			try {
-				const withdrawOutput: ContractTransaction = await Withdraw();
-				console.log(withdrawOutput);
+				await Withdraw();
 				this.setState({
-					tx: withdrawOutput.hash
+					message: {
+						type: 'success',
+						text: 'Withdraw successfully'
+					}
 				});
 			} catch (error: any) {
 				if (error.code === ethers.utils.Logger.errors.CALL_EXCEPTION) {
-					console.log(error);
-					this.setState({ errorMessage: error.message });
+					this.setState({
+						message: {
+							type: 'error',
+							text: error.reason
+						}
+					});
 				}
 			}
 		})();
@@ -66,19 +74,26 @@ export default class WithdrawForm extends Component<
 	harvest() {
 		(async () => {
 			try {
-				const harvestOutput: ContractTransaction = await Harvest();
+				await Harvest();
 				this.setState({
-					txHarvest: harvestOutput.hash
+					message: {
+						type: 'success',
+						text: 'Harvesting Successfully'
+					}
 				});
 			} catch (error: any) {
-				console.log(error);
-				this.setState({ errorMessage: error.reason });
+				this.setState({
+					message: {
+						type: 'error',
+						text: error.reason
+					}
+				});
 			}
 		})();
 	}
 
 	renderAlert() {
-		if (this.state.errorMessage != '') {
+		if (this.state.message.type == 'error') {
 			return (
 				<Box
 					borderWidth={1}
@@ -89,11 +104,11 @@ export default class WithdrawForm extends Component<
 					borderRadius={5}
 				>
 					<Text color={'error'} opacity={0.7}>
-						{this.state.errorMessage}
+						{this.state.message.text}
 					</Text>
 				</Box>
 			);
-		} else if (this.state.txHarvest != '') {
+		} else if (this.state.message.type == 'success') {
 			return (
 				<Box
 					borderWidth={1}
@@ -104,28 +119,7 @@ export default class WithdrawForm extends Component<
 					borderRadius={5}
 				>
 					<Text color={'success'} opacity={0.7}>
-						Harvesting successfully:{' '}
-						<Link href={'https://etherscan.io/tx/' + this.state.txHarvest}>
-							tx hash
-						</Link>
-					</Text>
-				</Box>
-			);
-		} else if (this.state.tx != '') {
-			return (
-				<Box
-					borderWidth={1}
-					borderColor={'success'}
-					p={2}
-					w={'full'}
-					px={4}
-					borderRadius={5}
-				>
-					<Text color={'success'} opacity={0.7}>
-						Withdraw successfully:{' '}
-						<Link href={'https://etherscan.io/tx/' + this.state.tx}>
-							tx hash
-						</Link>
+						{this.state.message.text}
 					</Text>
 				</Box>
 			);
