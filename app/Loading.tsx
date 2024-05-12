@@ -18,9 +18,7 @@ export default function Loading() {
 			<Box
 				as={motion.div}
 				animation={animation}
-				// not work: transition={{ ... }}
 				padding="2"
-				// @ts-ignore - "Does not exist" Type Error against Motion
 				bgGradient="linear(to-l, primary, #FF0080)"
 				width="12"
 				height="12"
