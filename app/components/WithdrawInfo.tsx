@@ -21,6 +21,7 @@ export default function WithdrawInfo(props: IWithdrawInfo) {
 	const [totalStaked, setTotalStaked] = useState(0);
 	const [totalStakers, setTotalStakers] = useState('0');
 	const [holderUnlockTime, setHolderUnlockTime] = useState(0);
+	const [rewardRemaining, setRewardRemaining] = useState('0');
 	const { isConnected } = useWeb3ModalAccount();
 	const { walletProvider } = useWeb3ModalProvider();
 
@@ -42,10 +43,12 @@ export default function WithdrawInfo(props: IWithdrawInfo) {
 			);
 			const stakingTotalStaked = await contract.totalStaked();
 			const stakingTotalStakers = await contract.totalStakers();
+			const stakingRewardRemaining = await contract.rewardsRemaining();
 
 			setTotalStaked(stakingTotalStaked);
 			setTotalStakers(stakingTotalStakers);
 			setHolderUnlockTime(stakingHolderUnlockTime);
+			setRewardRemaining(stakingRewardRemaining);
 			props.setHolderUnlockTime(stakingHolderUnlockTime);
 
 			setLoading(false);
@@ -74,6 +77,15 @@ export default function WithdrawInfo(props: IWithdrawInfo) {
 				<HStack justify={'space-between'}>
 					<Text>Total Stakers</Text>
 					<Text>{loading ? '-' : parseInt(totalStakers) + ' Stakers'}</Text>
+				</HStack>
+				<HStack justify={'space-between'}>
+					<Text>Rewards Remaining</Text>
+					<Text>
+						{loading
+							? '-'
+							: ethers.utils.formatUnits(rewardRemaining, 18).toString() +
+								' DRX'}
+					</Text>
 				</HStack>
 			</Flex>
 		</Box>
