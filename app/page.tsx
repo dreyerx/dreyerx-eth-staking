@@ -29,7 +29,7 @@ export default function Home() {
 					<HStack justify={'space-between'}>
 						<Text opacity={0.4}>Copyright &copy; 2024 DreyerX</Text>
 						<Text opacity={0.5} color={'primary'}>
-							Version: 1.0
+							Version: 1.3
 						</Text>
 					</HStack>
 				</Box>
