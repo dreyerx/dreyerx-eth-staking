@@ -1,18 +1,21 @@
 'use client';
-import { Box, Link, Text, VStack } from '@chakra-ui/react';
+import { Box, Text, VStack } from '@chakra-ui/react';
 import React, { Component } from 'react';
 import StakeInputWrapper from './StakeInputWrapper';
 import StakeButtonWrapper from './StakeButtonWrapper';
 import TokenBalanceWrapper from './TokenBalanceWrapper';
 import { BigNumberish, ContractTransaction, ethers } from 'ethers';
 import Deposit from '../logic/Deposit';
+import Approve from '../logic/Approve';
 
 interface IStakeFormState {
 	loading: boolean;
 	stakeAmount: string;
 	tokenAllowance: BigNumberish;
-	errorMessage: string;
-	tx: string;
+	message: {
+		type: string;
+		text: string;
+	};
 }
 
 export default class StakeForm extends Component<{}, IStakeFormState> {
@@ -23,8 +26,10 @@ export default class StakeForm extends Component<{}, IStakeFormState> {
 			loading: false,
 			stakeAmount: '',
 			tokenAllowance: 0,
-			errorMessage: '',
-			tx: ''
+			message: {
+				type: '',
+				text: ''
+			}
 		};
 
 		this.deposit = this.deposit.bind(this);
@@ -34,23 +39,39 @@ export default class StakeForm extends Component<{}, IStakeFormState> {
 		(async () => {
 			const stakeAmountEther = ethers.utils.parseEther(this.state.stakeAmount);
 			try {
+				if (this.state.tokenAllowance < stakeAmountEther) {
+					await Approve(stakeAmountEther);
+					this.setState({
+						message: {
+							type: 'success',
+							text: 'Approved'
+						}
+					});
+				}
 				const depositOutput: ContractTransaction =
 					await Deposit(stakeAmountEther);
 				console.log(depositOutput);
 				this.setState({
-					tx: depositOutput.hash
+					message: {
+						type: 'success',
+						text: 'Staking successfully'
+					}
 				});
 			} catch (error: any) {
 				if (error.code === ethers.utils.Logger.errors.CALL_EXCEPTION) {
-					console.log(error);
-					this.setState({ errorMessage: error.reason });
+					this.setState({
+						message: {
+							text: error.reason,
+							type: 'error'
+						}
+					});
 				}
 			}
 		})();
 	}
 
 	renderAlert() {
-		if (this.state.errorMessage != '') {
+		if (this.state.message.type == 'error') {
 			return (
 				<Box
 					borderWidth={1}
@@ -61,11 +82,11 @@ export default class StakeForm extends Component<{}, IStakeFormState> {
 					borderRadius={5}
 				>
 					<Text color={'error'} opacity={0.7}>
-						{this.state.errorMessage}
+						{this.state.message.text}
 					</Text>
 				</Box>
 			);
-		} else if (this.state.tx != '') {
+		} else if (this.state.message.type == 'success') {
 			return (
 				<Box
 					borderWidth={1}
@@ -76,8 +97,7 @@ export default class StakeForm extends Component<{}, IStakeFormState> {
 					borderRadius={5}
 				>
 					<Text color={'success'} opacity={0.7}>
-						Deposit successfully:{' '}
-						<Link href={'https://etherscan.io/tx/' + this.state.tx}>check</Link>
+						{this.state.message.text}
 					</Text>
 				</Box>
 			);
