@@ -17,7 +17,6 @@ export default function StakeInputWrapper(props: IStakeInputProps) {
 			color={'rgba(255, 255, 255, .6)'}
 			borderColor={'rgba(255, 255, 255, .1)'}
 			onChange={(e) => props.setValue(e.target.value)}
-
 			_hover={{
 				borderColor: 'rgba(255, 255, 255, .2)'
 			}}

@@ -105,7 +105,14 @@ export default class StakeForm extends Component<{}, IStakeFormState> {
 	}
 	render() {
 		return (
-			<Box bg={'card'} w={['full', 'full', 500]} borderRadius={5} p={5} mx={3} px={['20px', '20px', 5]}>
+			<Box
+				bg={'card'}
+				w={['full', 'full', 500]}
+				borderRadius={5}
+				p={5}
+				mx={3}
+				px={['20px', '20px', 5]}
+			>
 				<VStack gap={3} justify={'normal'}>
 					{this.renderAlert()}
 					<Box w={'full'}>
