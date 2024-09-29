@@ -13,9 +13,16 @@ export default function StakeInputWrapper(props: IStakeInputProps) {
 			placeholder="Stake Amount"
 			size={'lg'}
 			value={props.value}
+			borderWidth={1}
+			color={'rgba(255, 255, 255, .6)'}
+			borderColor={'rgba(255, 255, 255, .1)'}
 			onChange={(e) => props.setValue(e.target.value)}
+
+			_hover={{
+				borderColor: 'rgba(255, 255, 255, .2)'
+			}}
 			_focusVisible={{
-				borderColor: 'primary'
+				borderColor: 'rgba(255, 255, 255, .3)'
 			}}
 		/>
 	);

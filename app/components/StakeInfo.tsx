@@ -71,7 +71,7 @@ export default function StakeInfo() {
 	};
 
 	return (
-		<Box bg={'card'} w={500} borderRadius={5} p={5}>
+		<Box bg={'card'} w={['full', 'full', 500]} borderRadius={5} p={5}>
 			<Flex gap={3} flexDirection={'column'}>
 				<HStack justify={'space-between'}>
 					<Text>Annual Percentage Rate</Text>

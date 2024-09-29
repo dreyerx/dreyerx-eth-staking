@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { Box, Flex, HStack, Heading, Text } from '@chakra-ui/react';
 import Navigation from './components/Navigation';
 import StakeForm from './components/StakeForm';
@@ -25,7 +26,7 @@ export default function Home() {
 				<StakeForm />
 				<StakeInfo />
 
-				<Box w={500}>
+				<Box w={['full', 'full', 500]} px={['20px', '20px', 'inherit']}>
 					<HStack justify={'space-between'}>
 						<Text opacity={0.4}>Copyright &copy; 2024 DreyerX</Text>
 						<Text opacity={0.5} color={'primary'}>
