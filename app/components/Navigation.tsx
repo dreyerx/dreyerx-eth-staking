@@ -29,7 +29,11 @@ export default function Navigation() {
 							icon={faBoltLightning}
 							color={pathname == '/' ? '#aa55f7' : ''}
 						/>
-						<Text fontWeight={900} fontSize={['14px', '14px']} color={pathname == '/' ? 'primary' : ''}>
+						<Text
+							fontWeight={900}
+							fontSize={['14px', '14px']}
+							color={pathname == '/' ? 'primary' : ''}
+						>
 							DEPOSIT
 						</Text>
 					</HStack>
