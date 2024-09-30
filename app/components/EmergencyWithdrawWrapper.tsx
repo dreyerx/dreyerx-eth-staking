@@ -12,12 +12,13 @@ export default function EmergencyWithdrawWrapper(props: IWithdrawButtonProps) {
 		<Button
 			w={'full'}
 			bgColor={'primary'}
+			color={'white'}
 			onClick={() => props.withdrawFunction()}
 			_hover={{
 				bgColor: 'hover.primary'
 			}}
 		>
-			Withdraw
+			Emergency Withdraw
 		</Button>
 	);
 }

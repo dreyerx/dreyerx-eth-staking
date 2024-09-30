@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { Box, Flex, HStack, Heading, Text } from '@chakra-ui/react';
 import Navigation from '../components/Navigation';
 import WithdrawForm from '../components/WithdrawForm';
@@ -42,11 +43,11 @@ export default function Page() {
 						}
 					/>
 
-					<Box w={500}>
+					<Box w={['fulll', 'full', 500]}>
 						<HStack justify={'space-between'}>
 							<Text opacity={0.4}>Copyright &copy; 2024 DreyerX</Text>
-							<Text opacity={0.5} color={'primary'}>
-								Version: 1.3
+							<Text opacity={0.5} color={'text'}>
+								Version: 1.4
 							</Text>
 						</HStack>
 					</Box>

@@ -29,8 +29,8 @@ export default function Home() {
 				<Box w={['full', 'full', 500]} px={['20px', '20px', 'inherit']}>
 					<HStack justify={'space-between'}>
 						<Text opacity={0.4}>Copyright &copy; 2024 DreyerX</Text>
-						<Text opacity={0.5} color={'primary'}>
-							Version: 1.3
+						<Text opacity={0.5} color={'text'}>
+							Version: 1.4
 						</Text>
 					</HStack>
 				</Box>
